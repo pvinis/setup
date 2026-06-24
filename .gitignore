@@ -1,1 +1,10 @@
 .DS_Store
+
+# never commit captured secrets / auth material
+home/.config/gh/hosts.yml
+**/hosts.yml
+**/*.token
+*.key
+*.pem
+.env
+.envrc

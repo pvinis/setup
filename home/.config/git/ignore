@@ -1,0 +1,26 @@
+# macos
+.DS_Store
+
+# usual
+.envrc
+.env
+
+# node
+**/node_modules/*
+
+# xcode User settings
+**/xcuserdata/*
+
+# ios app packaging
+**/*.ipa
+**/*.dSYM.zip
+**/*.dSYM
+
+# fastlane
+**/fastlane/report.xml
+
+# claude
+**/.claude/settings.local.json
+
+# but keep these (useful for keeping empty folders)
+!.gitkeep

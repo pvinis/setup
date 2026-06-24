@@ -1,0 +1,9 @@
+[tools]
+bun = "1"
+chezmoi = "latest"
+node = "24"
+python = "3"
+uv = "latest"
+
+[settings]
+trusted_config_paths = ["~/Source", "~/conductor/workspaces"]

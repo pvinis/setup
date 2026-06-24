@@ -12,6 +12,13 @@ A few parallel attempts, none of them the clear winner yet:
 - [pvinis/home](https://github.com/pvinis/home) — "another try to keep my dotfiles".
 - [pvinis/machez](https://github.com/pvinis/machez) — earlier stub.
 
+**Found on this machine (2026-06-25):** a chezmoi source dir already exists at
+`~/.local/share/chezmoi`, and it's already being synced by **Syncthing** (`.stfolder` /
+`.stignore` present). So chezmoi + syncthing is partially live, though it currently only manages
+`private_Library` — barely used. This leans the eventual decision toward "chezmoi as manager +
+syncthing for the source dir". Most actual dotfiles are still loose, unmanaged files in
+`~/.config`.
+
 ## Options to evaluate
 
 ### chezmoi

@@ -56,9 +56,18 @@ Brewfile          # Homebrew package manifest (applied with `brew bundle`)
 macos/            # macOS-specific steps
   brew.sh         # install Homebrew if missing, then apply the Brewfile
   defaults.sh     # macOS system/app preferences (idempotent `defaults` writes)
+home/             # captured config snapshots, mirroring paths under $HOME
 docs/             # notes & decisions
   dotfiles-sync.md
 ```
+
+## Config (`home/`)
+
+`home/` holds captured config for the tools we install, mirroring each file's path under `$HOME`
+(e.g. `home/.config/mise/config.toml` -> `~/.config/mise/config.toml`). It's a snapshot only;
+applying it to a machine (symlink / copy / chezmoi) is still TBD, see
+[docs/dotfiles-sync.md](docs/dotfiles-sync.md). Secrets (e.g. `gh`'s `hosts.yml`) are excluded and
+git-ignored. See [home/README.md](home/README.md).
 
 ## Homebrew
 

@@ -1,0 +1,10 @@
+[user]
+	name = Pavlos Vinieratos
+	email = pvinis@gmail.com
+	signingkey = 57EBE37FEAE59ADD
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[alias]
+	boc = reset --soft HEAD~1
