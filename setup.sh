@@ -19,6 +19,8 @@ info "Detected OS: $os"
 
 case "$os" in
   Darwin)
+    # shellcheck source=macos/brew.sh
+    source "$REPO_DIR/macos/brew.sh"
     # shellcheck source=macos/defaults.sh
     source "$REPO_DIR/macos/defaults.sh"
     ;;

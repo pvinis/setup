@@ -43,15 +43,25 @@ this repo over time. For now, they're still the source of truth:
 - [ ] Decide on a dotfiles sync strategy, see [docs/dotfiles-sync.md](docs/dotfiles-sync.md)
       (investigating mackup vs chezmoi vs syncthing).
 - [ ] Migrate dotfiles from the repos above into here.
-- [ ] Flesh out Linux setup.
+- [ ] Grow the Brewfile from the top 10 to the full leaf list.
+- [ ] Add casks (apps) to the Brewfile (~109 currently installed).
+- [ ] Flesh out Linux setup (Homebrew also runs on Linux, so the Brewfile can be shared).
 - [ ] More macOS defaults.
 
 ## Layout
 
 ```
 setup.sh          # entry point: detects OS, runs the right steps
+Brewfile          # Homebrew package manifest (applied with `brew bundle`)
 macos/            # macOS-specific steps
+  brew.sh         # install Homebrew if missing, then apply the Brewfile
   defaults.sh     # macOS system/app preferences (idempotent `defaults` writes)
 docs/             # notes & decisions
   dotfiles-sync.md
 ```
+
+## Homebrew
+
+`macos/brew.sh` installs Homebrew (official command from <https://brew.sh>) if it isn't already
+there, then runs `brew bundle` against the `Brewfile`. The Brewfile currently holds a curated top
+10; the rest of my current leaves are listed commented-out so growing it is just uncommenting.
