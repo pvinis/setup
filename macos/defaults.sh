@@ -10,11 +10,11 @@ type info >/dev/null 2>&1 || info() { printf '==> %s\n' "$*"; }
 type ok   >/dev/null 2>&1 || ok()   { printf '  + %s\n' "$*"; }
 type warn >/dev/null 2>&1 || warn() { printf '  ! %s\n' "$*"; }
 
-# Pointer size. macOS default is 1.0, which is a bit small for me; I like it ~2x.
+# Pointer size. macOS default is 1.0, which is a bit small for me; I like it at 1.5.
 # System Settings > Accessibility > Display > Pointer > Pointer size.
 # Key range is roughly 1.0 (normal) .. 4.0 (large).
 macos_cursor_size() {
-  local desired="2.0"
+  local desired="1.5"
   local current
   current="$(defaults read com.apple.universalaccess mouseDriverCursorSize 2>/dev/null || echo "1.0")"
 
