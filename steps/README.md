@@ -24,8 +24,19 @@ just has no platform sections.
 
 **Say how to know it's already done**, in prose, command inline. Include what the never-ran
 state looks like when that isn't obvious — a missing macOS default key means stock 1.0, not
-an error — and any way the check can lie. `XCURSOR_SIZE` reads as unset over ssh even when
-the step is done.
+an error — and any way the check can lie.
+
+**Check the authoritative source, not a convenient proxy.** This is the one that actually
+bit us: the cursor step originally verified with `printenv`, which reports whatever the
+current shell inherited, so it showed the old value after a successful change and would have
+shown the new one after a failed change. Reading the session's real environment
+(`systemctl --user show-environment`) would have caught the failure on the first try.
+A check you can't be wrong about is worth more than a short one.
+
+**A step is not done when the file is written.** Config that only loads at login, or a
+daemon that needs a reload, means the persistent change and the running system have
+diverged. Say which one the check reads, and give the command that applies it *now* if there
+is one.
 
 **Point at package-owned files rather than editing them.** Which file the override belongs
 in, and why that one and not the other, is worth a sentence.

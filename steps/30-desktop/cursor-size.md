@@ -32,6 +32,8 @@ grep XCURSOR_SIZE /usr/share/omarchy/default/hypr/envs.lua
 Stock was **24** when this was written, making 1.5x = **36**. Recompute rather than trusting
 that number; Omarchy owns that file and an update can move it.
 
+### Persist it
+
 Don't edit Omarchy's defaults — they're package-owned and an update overwrites them. Put the
 override in `~/.config/hypr/looknfeel.lua`, which `hyprland.lua` requires *after* the
 defaults:
@@ -41,22 +43,44 @@ hl.env("XCURSOR_SIZE", "36")
 hl.env("HYPRCURSOR_SIZE", "36")
 ```
 
-GTK apps keep their own setting, and this one takes effect immediately:
+GTK apps keep their own setting, and this one does take effect immediately:
 
 ```sh
 gsettings set org.gnome.desktop.interface cursor-size 36
 ```
 
-Then `hyprctl reload`. That's the Hyprland equivalent of macOS's log-out-and-back-in: the
-env only reaches **newly spawned** processes, so already-running apps keep the old cursor
-until they restart.
+### That config is inert until the next login, and `hyprctl reload` will not help
 
-Already done if `printenv XCURSOR_SIZE` prints 36 **inside a Hyprland session**. Two ways
-that check lies, both seen while running this step:
+The session runs under **UWSM**, which exports `XCURSOR_SIZE`/`HYPRCURSOR_SIZE` into the
+systemd and dbus environments exactly once, at login — see `UWSM_FINALIZE_VARNAMES` in the
+compositor's environ. Hyprland applies `env` only at startup too. So `hyprctl reload`
+returns `ok` and changes nothing about the cursor.
 
-- Over plain ssh the variable is unset, because it only exists in the compositor's session.
-- **Any shell that predates the reload** still reports the old value, including the one the
-  agent is running in. Check from a freshly launched terminal, or just look at the cursor.
+Either log out and back in, or apply to the running session as well:
 
-`hyprctl dispatch exec` is not a way around this — Omarchy's `hyprctl` takes Lua, not a
-shell command, so it won't run a `printenv` for you.
+```sh
+hyprctl setcursor Adwaita 36
+systemctl --user set-environment XCURSOR_SIZE=36 HYPRCURSOR_SIZE=36
+dbus-update-activation-environment --systemd XCURSOR_SIZE=36 HYPRCURSOR_SIZE=36
+```
+
+Two traps in those three lines:
+
+- **The theme name is derived, not fixed.** `XCURSOR_THEME` is unset here and the `default`
+  icon theme merely inherits Adwaita, which is why `Adwaita` is the name that works. No
+  hyprcursor themes are installed, so Hyprland is on the XCursor fallback path. Check what
+  the session actually uses before assuming.
+- **Pass the values explicitly to `dbus-update-activation-environment`.** Given bare
+  variable names it reads them from the calling shell — and if that shell predates the
+  change, it silently writes the old value back over the new one.
+
+### Knowing it's done
+
+```sh
+systemctl --user show-environment | grep -E '^(X|HYPR)CURSOR_SIZE'
+```
+
+That is the session's authoritative environment. **`printenv` is not**: any shell older than
+the change reports the stale value, including the one the agent is running in, which makes a
+finished step look unfinished and an unfinished one look done. Confirm by looking at the
+cursor.
