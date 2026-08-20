@@ -16,8 +16,8 @@ I can't do this part — GUI app, account password, second factor.
 > complete 2FA. Then in Settings > Developer, turn on **"Integrate with 1Password CLI"**.
 > Tell me when that's done.
 
-Then re-run the check below. The work account (leanscaper.1password.com) is a separate
-sign-in — ask whether this machine needs it, don't assume either way.
+Then re-run the check below. The work account is a separate sign-in — ask whether this
+machine needs it, don't assume either way.
 
 ## Knowing it's done
 
