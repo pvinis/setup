@@ -16,16 +16,7 @@ Getting from a bare machine to **an agent that can be typed at**. That's all thi
 clones this repo itself and finds its own way in, so there's nothing to download or `cd` into by
 hand.
 
-**Omarchy** — nothing to install. It already ships `git`, `curl`, `mise` and the agents themselves
-(its own `install/user/mise.sh` installs `claude`, `codex`, `gemini` and friends). Open a terminal:
-
-```sh
-claude
-```
-
-**macOS** — nothing is installed yet, so install `mise` and let it fetch the agent. Xcode Command
-Line Tools are **not** needed to get this far: `mise` is a static binary and `claude` comes down as
-a release binary, so neither wants a compiler. CLT is the agent's first job, not yours.
+**Any machine, macOS or Linux.** Install `mise`, and let it fetch the agent:
 
 ```sh
 curl https://mise.run | sh
@@ -34,9 +25,23 @@ curl https://mise.run | sh
 ```
 
 Absolute paths on purpose — they work in the terminal already open, with no PATH setup and no
-restart.
+restart. `mise` and `claude` are both prebuilt binaries, so **neither needs a compiler**: on macOS
+that means Xcode Command Line Tools are not a prerequisite for getting this far, and on a bare Linux
+box it means no build toolchain either. Whatever's missing after that — CLT, `git`, a package
+manager — is the agent's first job, not yours.
 
-**Then, on either OS**, it asks you to log in. The login lives in 1Password, and on a bare machine
+If `curl` itself is missing (some minimal server images), that's the one thing to install by hand
+first; everything else the agent can do.
+
+**Omarchy is a shortcut, not a different path.** It already ships `git`, `curl`, `mise` *and* the
+agents — its own `install/user/mise.sh` installs `claude`, `codex`, `gemini` and friends — so
+there's nothing to install and the three lines above collapse to:
+
+```sh
+claude
+```
+
+**Then, on any machine**, it asks you to log in. The login lives in 1Password, and on a bare machine
 that means signing in to 1Password **in a browser** first — the app and CLI come later, as
 [`steps/00-human/1password-signin.md`](steps/00-human/1password-signin.md). Once the agent answers,
 say:
