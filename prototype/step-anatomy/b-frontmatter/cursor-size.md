@@ -1,47 +1,53 @@
 ---
 step: cursor-size
-applies:
-  display: headed
+want: cursor at 1.5x the platform's stock size
 check:
-  macos: defaults read com.apple.universalaccess mouseDriverCursorSize   # want 1.5
-  omarchy: printenv XCURSOR_SIZE                                         # want 36
+  macos: defaults read com.apple.universalaccess mouseDriverCursorSize
+  omarchy: printenv XCURSOR_SIZE
 ---
 
 # Cursor size
 
-Make the mouse pointer a bit bigger than stock. Comfort thing.
-
-The frontmatter is only the two things you need to *decide* with: whether this machine gets
-the step at all, and whether it's already satisfied. Everything about actually doing it is
-below, in prose, because it needs judgement.
+I want the pointer at **1.5x whatever the platform ships as stock**. That's the step. The
+number you end up writing is *derived* per platform, not stored here — platforms express
+cursor size in different units, and their stock values move.
 
 ## macOS
 
-Pointer size is a **multiplier**, 1.0 (stock) to 4.0 (huge). I want **1.5**.
+The setting already *is* a multiplier, 1.0 stock to 4.0 huge, so the intent is literal:
+**1.5**.
 
 ```sh
 defaults write com.apple.universalaccess mouseDriverCursorSize -float 1.5
 ```
 
-If the key is missing entirely, macOS is at its 1.0 default — the step has never run. Log
-out and back in afterwards; some apps hold the old cursor until then.
+Key missing entirely = macOS is at stock 1.0, so the step has never run. Log out and back
+in afterwards; some apps hold the old cursor until then.
 
-GUI location: System Settings > Accessibility > Display > Pointer > Pointer size.
+GUI: System Settings > Accessibility > Display > Pointer > Pointer size.
 
 ## Omarchy (Hyprland)
 
-Pixels here, not a multiplier. Omarchy's stock is 24, so 1.5x is **36**.
+Pixels here, not a multiplier — so read the stock value and multiply it:
 
-Don't edit `/usr/share/omarchy/default/hypr/envs.lua` — package-owned, an update overwrites
-it. Put the override in `~/.config/hypr/looknfeel.lua`, required *after* the defaults:
+```sh
+grep XCURSOR_SIZE /usr/share/omarchy/default/hypr/envs.lua
+```
+
+Stock was **24** when this was written, making 1.5x = **36**. Recompute rather than trusting
+that number: Omarchy owns that file and an update can move it.
+
+Don't edit the defaults; they're package-owned and an update overwrites them. Put the
+override in `~/.config/hypr/looknfeel.lua`, which `hyprland.lua` requires *after* Omarchy's
+defaults:
 
 ```lua
 hl.env("XCURSOR_SIZE", "36")
 hl.env("HYPRCURSOR_SIZE", "36")
 ```
 
-GTK apps keep their own setting: `gsettings set org.gnome.desktop.interface cursor-size 36`.
+GTK apps keep their own setting:
+`gsettings set org.gnome.desktop.interface cursor-size 36`.
 
-The `check` only works inside a Hyprland session — over plain ssh `XCURSOR_SIZE` is unset
-even when the step is done. A check that can be wrong from the wrong vantage point is a
-thing the frontmatter can't express.
+`check` only reads true inside a Hyprland session — over plain ssh `XCURSOR_SIZE` is unset
+even when the step is done. Don't take that as "not done".

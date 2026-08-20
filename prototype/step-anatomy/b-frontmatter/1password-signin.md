@@ -1,7 +1,6 @@
 ---
 step: 1password-signin
-applies:
-  display: headed
+want: 1Password signed in, with the CLI integration live
 check:
   all: op whoami
 ---
@@ -20,20 +19,17 @@ Root of trust. Nothing downstream that needs a secret can run until this is done
 I can't do this part — GUI app, account password, second factor.
 
 > Open 1Password, sign in to **my.1password.com** (pvinis@gmail.com), complete 2FA, then
-> Settings > Developer > enable **"Integrate with 1Password CLI"**. Tell me when done.
+> Settings > Developer > enable **"Integrate with 1Password CLI"**. Tell me when that's
+> done.
 
-Work account (leanscaper.1password.com) is a separate sign-in. Ask whether this machine
-needs it.
+Then re-run the check. The work account (leanscaper.1password.com) is a separate sign-in —
+ask whether this machine needs it, don't assume either way.
 
 ## Reading the check
 
-`op whoami` prints account URL and email when usable. `account is not signed in` means the
-CLI knows the account but has no session — app locked or integration off. Ask for an
-unlock; don't reinstall.
+`op whoami` prints the account URL and email when it's genuinely usable.
 
-## Where the frontmatter lies
-
-`applies: display: headed` says *skip on headless*. That's wrong — on headless the step
-still applies, it just has a **different procedure** (service account token, or
-`op account add` + `op signin`). "Applies / doesn't apply" is a boolean, and this is a
-branch. Either `applies` grows a third value, or the headless variant becomes its own step.
+- **`account is not signed in`** — the CLI knows the account but has no session. App locked,
+  or the CLI integration is off. Ask for an unlock; don't reinstall anything.
+- **`op account list` prints nothing** — the CLI has never been told about the account. That
+  is the real never-ran state.
