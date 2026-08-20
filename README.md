@@ -8,7 +8,7 @@ When I'm on a new machine, I tell Claude (or another agent) to read this repo an
 things up. The goal is an **idempotent** setup: run it as many times as you like, it converges the
 machine toward the state I want and never makes a mess doing it.
 
-Right now it's small (just a bit of macOS config). It'll grow.
+Right now it's small — a handful of steps under [`steps/`](steps/). It'll grow.
 
 ## Bootstrap: a brand-new machine
 
@@ -65,19 +65,18 @@ this repo over time. For now, they're still the source of truth:
 - [ ] Decide on a dotfiles sync strategy, see [docs/dotfiles-sync.md](docs/dotfiles-sync.md)
       (investigating mackup vs chezmoi vs syncthing).
 - [ ] Migrate dotfiles from the repos above into here.
-- [ ] Grow the Brewfile from the top 10 to the full leaf list.
-- [ ] Add casks (apps) to the Brewfile (~109 currently installed).
-- [ ] Flesh out Linux setup (Homebrew also runs on Linux, so the Brewfile can be shared).
-- [ ] More macOS defaults.
+- [ ] Grow the package list one package at a time, with a reason for each
+      (see [#12](https://github.com/pvinis/setup/issues/12)).
+- [ ] More desktop settings steps.
 
 ## Layout
 
 ```
-setup.sh          # entry point: detects OS, runs the right steps
-Brewfile          # Homebrew package manifest (applied with `brew bundle`)
-macos/            # macOS-specific steps
-  brew.sh         # install Homebrew if missing, then apply the Brewfile
+AGENTS.md         # the agent's entry point: rules + step catalogue
 steps/            # the runbook: one markdown file per step (see steps/README.md)
+  00-human/       # steps only I can do, walked first
+  20-packages/    # tools, apps and fonts
+  30-desktop/     # desktop / UI settings
 reference/        # captured config snapshots, kept aside; nothing applies them
 docs/             # notes & decisions
   dotfiles-sync.md
@@ -90,8 +89,3 @@ file's path under `$HOME`. **Nothing applies it** — it's a photograph kept as 
 it already diverges from this Linux machine (git config path, default branch, aliases, signing).
 See [reference/mac-snapshot-2026-06/README.md](reference/mac-snapshot-2026-06/README.md).
 
-## Homebrew
-
-`macos/brew.sh` installs Homebrew (official command from <https://brew.sh>) if it isn't already
-there, then runs `brew bundle` against the `Brewfile`. The Brewfile currently holds a curated top
-10; the rest of my current leaves are listed commented-out so growing it is just uncommenting.
