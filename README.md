@@ -47,11 +47,8 @@ That line is the entire handoff, and it works from any directory.
 
 ## For an AI agent setting up a new machine
 
-- Read this README and `setup.sh` first to understand the structure.
-- Run `./setup.sh` to apply the current setup. It's idempotent, so just run it.
-- Each step is small and self-describing. Prefer adding a new small, idempotent step over one big
-  bespoke script.
-- Don't apply anything destructive or irreversible without asking me first.
+**Read [`AGENTS.md`](AGENTS.md).** That's the entry point — the rules of engagement and the step
+catalogue. This README is for the human; it exists to point you there.
 
 ## Related repos (being consolidated here)
 
