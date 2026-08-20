@@ -44,11 +44,14 @@ From the system package manager:
 repeated here — it's the root of trust and has to land before anything that needs a secret.
 
 This list is a deliberate core, not an inventory of either machine. Growing it happens one
-package at a time, with a reason, via
-[#12](https://github.com/pvinis/setup/issues/12) — not by dumping `pacman -Qqe` or
-`brew leaves` into it. Several things on the old Mac list (`direnv`, `fish`, `thefuck`,
-`tree`, `wget`, `diff-so-fancy`) aren't here and aren't on this Linux box either; whether
-that's drift or a decision is that ticket's question, not this step's.
+package at a time, with a reason — not by dumping `pacman -Qqe` or `brew leaves` into it.
+
+Several things on the old Mac list (`direnv`, `fish`, `thefuck`, `tree`, `wget`,
+`diff-so-fancy`) aren't here and aren't on this Linux box either.
+[#12](https://github.com/pvinis/setup/issues/12) asked whether that was drift or a decision
+and settled it as a **decision**: I have been running this machine without them for its whole
+life, which is a stronger answer than anything I'd have reasoned out. Absence from this list
+is a verdict, not an oversight.
 
 ## Omarchy / Arch
 

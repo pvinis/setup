@@ -23,7 +23,29 @@ macOS but works fine over ssh, so it lives with the CLI tools, not here.
 - **Voxtype** — push-to-talk voice-to-text. **Linux only**; it has no macOS build, so there's
   nothing to install there. If I want the same thing on a Mac it'll be a different app, and
   that's a fresh decision rather than a translation of this line.
+- **OBS Studio** — screen recording. Omarchy ships it, so it's already here; that is not the
+  same as it being unwanted, and on a Mac nothing would install it.
 - **Iosevka, Nerd Font build** — the terminal font.
+
+**A package the platform already ships is still a package I want.** Omarchy's base manifest
+carries `obsidian`, `chromium` and `obs-studio`, so none of them appear in a diff of this
+machine against that manifest — and a list built from such a diff drops them silently. That's
+the delta thinking this step opens by warning against, and it's an easy trap because the
+delta *looks* right on the machine it was built on. The test is whether I want it on a fresh
+Mac, not whether it's missing here.
+
+**Chromium is the exception, and it isn't really an app.** Omarchy uses it as the fallback
+browser for web apps (`omarchy-launch-webapp`), the default in `mimeapps.list`, and the
+backing for picture-in-picture and part of the menu. Platform infrastructure that happens to
+be a browser, so it isn't a choice this list gets to make.
+
+**Not wanted, despite being installed:** Obsidian. Omarchy ships it and I don't use it.
+Written down because the *absence* of a decision already caused one — a login step got
+drafted for it on the assumption it was wanted. A negative earns a line here only when the
+positive was previously assumed; this is not the start of an inventory of everything Omarchy
+ships that I don't use. And nothing here *uninstalls* it: a step that removes an OS-shipped
+package is a fight re-fought on every update, so if I want it gone from a machine that's a
+one-off by hand.
 
 Installing Syncthing is not the same as running it: it ships a user service that is **not
 enabled by default**, and it's currently installed-but-disabled on `hookers-green`. Decide
@@ -36,8 +58,12 @@ genuinely different package — not a naming difference. Resolve which one I act
 when there's a Mac in front of us rather than guessing now.
 
 Everything else from the old Mac Brewfile — 62 casks including whole sections named "try"
-and "random silly ones" — is **not** in scope here. It goes through
-[#12](https://github.com/pvinis/setup/issues/12) one app at a time.
+and "random silly ones" — was walked in
+[#12](https://github.com/pvinis/setup/issues/12) and **does not come over**. Every
+cross-platform entry there had already been rejected by simply not being installed on this
+machine; what remains is macOS-only (`raycast`, `bartender`, `fantastical`, `arq`,
+`rectangle-pro`…) and can't be judged without a Mac in front of me, so it waits for one
+rather than being guessed at now.
 
 ## Omarchy / Arch
 
