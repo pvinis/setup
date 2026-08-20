@@ -30,6 +30,10 @@ the step is done.
 **Point at package-owned files rather than editing them.** Which file the override belongs
 in, and why that one and not the other, is worth a sentence.
 
+**Name your prerequisites**, in prose, if the step has any. Steps declare what they need
+rather than being sequenced by the index ([#7](https://github.com/pvinis/setup/issues/7)) —
+and with no frontmatter, that declaration is a sentence like any other.
+
 ## Human steps go in `00-human/`
 
 Steps only I can do — GUI apps, account passwords, second factors — aren't a flag on a step.
@@ -47,7 +51,9 @@ a step demands it, not before.
 
 ## Not settled here
 
-- **Ordering beyond "human first."** The `NN-` prefixes are a placeholder.
+- **Ordering beyond "human first."** Sequence comes from each step's declared
+  prerequisites, not from the directory names — the `NN-` prefixes group by *kind* and give
+  a readable listing, nothing more. Whether they earn their keep at all is open.
 - **A step that's mostly automatic with one human beat in the middle** has no home yet.
   `gh auth login` is the obvious case: the agent can run it, but a browser and a second
   factor happen in the middle.
