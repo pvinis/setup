@@ -56,18 +56,17 @@ Brewfile          # Homebrew package manifest (applied with `brew bundle`)
 macos/            # macOS-specific steps
   brew.sh         # install Homebrew if missing, then apply the Brewfile
   defaults.sh     # macOS system/app preferences (idempotent `defaults` writes)
-home/             # captured config snapshots, mirroring paths under $HOME
+reference/        # captured config snapshots, kept aside; nothing applies them
 docs/             # notes & decisions
   dotfiles-sync.md
 ```
 
-## Config (`home/`)
+## Reference snapshots (`reference/`)
 
-`home/` holds captured config for the tools we install, mirroring each file's path under `$HOME`
-(e.g. `home/.config/mise/config.toml` -> `~/.config/mise/config.toml`). It's a snapshot only;
-applying it to a machine (symlink / copy / chezmoi) is still TBD, see
-[docs/dotfiles-sync.md](docs/dotfiles-sync.md). Secrets (e.g. `gh`'s `hosts.yml`) are excluded and
-git-ignored. See [home/README.md](home/README.md).
+`reference/mac-snapshot-2026-06/` holds config captured from the Mac on 2026-06-25, mirroring each
+file's path under `$HOME`. **Nothing applies it** — it's a photograph kept as a memory-jogger, and
+it already diverges from this Linux machine (git config path, default branch, aliases, signing).
+See [reference/mac-snapshot-2026-06/README.md](reference/mac-snapshot-2026-06/README.md).
 
 ## Homebrew
 
