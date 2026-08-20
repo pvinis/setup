@@ -55,7 +55,7 @@ setup.sh          # entry point: detects OS, runs the right steps
 Brewfile          # Homebrew package manifest (applied with `brew bundle`)
 macos/            # macOS-specific steps
   brew.sh         # install Homebrew if missing, then apply the Brewfile
-  defaults.sh     # macOS system/app preferences (idempotent `defaults` writes)
+steps/            # the runbook: one markdown file per step (see steps/README.md)
 reference/        # captured config snapshots, kept aside; nothing applies them
 docs/             # notes & decisions
   dotfiles-sync.md

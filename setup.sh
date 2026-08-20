@@ -21,8 +21,6 @@ case "$os" in
   Darwin)
     # shellcheck source=macos/brew.sh
     source "$REPO_DIR/macos/brew.sh"
-    # shellcheck source=macos/defaults.sh
-    source "$REPO_DIR/macos/defaults.sh"
     ;;
   Linux)
     warn "Linux setup is not implemented yet."

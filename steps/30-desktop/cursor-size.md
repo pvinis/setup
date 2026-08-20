@@ -41,12 +41,22 @@ hl.env("XCURSOR_SIZE", "36")
 hl.env("HYPRCURSOR_SIZE", "36")
 ```
 
-GTK apps keep their own setting:
+GTK apps keep their own setting, and this one takes effect immediately:
 
 ```sh
 gsettings set org.gnome.desktop.interface cursor-size 36
 ```
 
-Already done if `printenv XCURSOR_SIZE` prints 36 **inside a Hyprland session**. It won't
-over plain ssh — that variable only exists in the compositor's session, so a missing value
-from the wrong vantage point isn't "not done".
+Then `hyprctl reload`. That's the Hyprland equivalent of macOS's log-out-and-back-in: the
+env only reaches **newly spawned** processes, so already-running apps keep the old cursor
+until they restart.
+
+Already done if `printenv XCURSOR_SIZE` prints 36 **inside a Hyprland session**. Two ways
+that check lies, both seen while running this step:
+
+- Over plain ssh the variable is unset, because it only exists in the compositor's session.
+- **Any shell that predates the reload** still reports the old value, including the one the
+  agent is running in. Check from a freshly launched terminal, or just look at the cursor.
+
+`hyprctl dispatch exec` is not a way around this — Omarchy's `hyprctl` takes Lua, not a
+shell command, so it won't run a `printenv` for you.
