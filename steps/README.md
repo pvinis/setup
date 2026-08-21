@@ -74,6 +74,17 @@ daemon that needs a reload, means the persistent change and the running system h
 diverged. Say which one the check reads, and give the command that applies it *now* if there
 is one.
 
+**A step must be re-entrant, not just idempotent.** Idempotent is "running it twice is
+safe". The runbook needs "running it again after dying *partway through* is safe", because
+that is how runs actually end — the session dies, context runs out, I swap `claude` for
+`codex`. Re-running is the only resume there is
+([#23](https://github.com/pvinis/setup/issues/23)), so a step gets re-entered at whatever
+line it stopped on. The two rules above are what buy that: a check on the authoritative
+source can tell a half-applied step from a finished one, and knowing the file isn't the
+finish line stops a step calling itself done at its own midpoint. `gh-auth.md` is the worked
+example — it unsets and then adds, and both one-liners that collapse the pair corrupt the
+config by the third run.
+
 **Point at package-owned files rather than editing them.** Which file the override belongs
 in, and why that one and not the other, is worth a sentence.
 
