@@ -32,7 +32,10 @@ Steps live in `steps/`; the format they follow is [`steps/README.md`](steps/READ
 - [`appearance.md`](steps/30-desktop/appearance.md)
 - *input, bar, dock, sound, displays, idle and lock, terminal font* — [#19](https://github.com/pvinis/setup/issues/19)
 
-**`40-shell/`** — *shell config, git config*: [#20](https://github.com/pvinis/setup/issues/20)
+**`40-shell/`**
+
+- [`shell-config.md`](steps/40-shell/shell-config.md) — personal aliases and exports, below the platform's own line
+- [`git-config.md`](steps/40-shell/git-config.md) — the non-identity half of git config, and the `~/.gitconfig` seam
 
 ## Working on the repo
 
@@ -46,4 +49,4 @@ The five canonical triage roles, default label names unchanged. See `docs/agents
 
 ### Domain docs
 
-Single-context: `CONTEXT.md` and `docs/adr/` at the repo root. Neither exists yet; `/domain-modeling` creates them lazily. See `docs/agents/domain.md`.
+Single-context: [`CONTEXT.md`](CONTEXT.md) at the repo root — read it before writing a step, since it settles where a personal value is allowed to live on a platform someone else configured. `docs/adr/` doesn't exist yet; `/domain-modeling` creates it lazily. See `docs/agents/domain.md`.
