@@ -41,8 +41,16 @@ _Avoid_: task, script, recipe
 
 **Ask**:
 A question the runbook puts to me because no platform fact predicts the answer — timezone,
-headed or headless. Not a step, and not human work.
+headed or headless. Not a step, and not human work; its answer is remembered in the machine
+file.
 _Avoid_: prompt, input
+
+**Machine file**:
+`~/THIS-MACHINE.md` — the answers to this machine's asks, plus a newest-first log of what
+each run changed. Lives in `$HOME` because it describes the machine and not the repo, and is
+never committed. Holds answers only: a value a step can derive is recomputed every run, never
+stored.
+_Avoid_: state file, cache, manifest, machine config
 
 **Human step**:
 Work only I can do, end to end — a password, a second factor, a GUI login. Its own group,
