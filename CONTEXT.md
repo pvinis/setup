@@ -63,3 +63,18 @@ What I want present, stated without reference to what any one platform ships —
 free to be a no-op where the platform already provides it. The opposite of a delta against a
 particular machine.
 _Avoid_: manifest, delta, diff
+
+### Identity and secrets
+
+**Root of trust**:
+1Password, signed in, with `op` able to reach the vault. Every later secret depends on this
+one thing and nothing depends on anything before it, which is what makes it the root rather
+than the first item on a list. Reaching it is irreducibly human — an account password and a
+second factor — so it is a human step and it is walked first.
+_Avoid_: secret store, vault, password manager (those name the product; this names its role)
+
+**The rule:** the runbook delivers *access* to secrets, never copies of them. A step that
+needs a secret reads it when it needs it, addressed as `op://Vault/Item/field`; nothing is
+fetched ahead of time, restored from a list, or written into a file this repo manages. A
+"decrypt these files onto the new machine" inventory is the dotfiles problem wearing a
+security hat, and it is out of scope for the same reason everything else there is.

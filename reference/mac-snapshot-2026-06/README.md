@@ -19,12 +19,13 @@ exactly why it isn't treated as truth:
 | git config path | `~/.gitconfig` | `~/.config/git/config` (XDG) |
 | `init.defaultBranch` | `main` | `master` |
 | aliases | one set | a different set |
-| `commit.gpgsign` | on, with a hardcoded signing key | absent |
-| `gh` credential helper | — | hardcoded absolute mise install path |
+| `commit.gpgsign` | on, with a hardcoded signing key | absent — **settled: absent is intended**, [#5](https://github.com/pvinis/setup/issues/5) |
+| `gh` credential helper | — | was a hardcoded absolute mise install path; **settled and repaired**, [#5](https://github.com/pvinis/setup/issues/5) |
 | mise config | Mac tool set | diverges |
 
 Which side of each divergence is the *intended* state is an open question for the runbook, not
-something this directory answers.
+something this directory answers — though the rows marked **settled** above have since been
+answered elsewhere, and the Mac's side lost both times.
 
 ## What's here
 
@@ -39,7 +40,10 @@ something this directory answers.
 ## Deliberately NOT captured
 
 - **`~/.config/gh/hosts.yml`** — holds the GitHub auth token. Secret. Git-ignored. Recreate on a
-  new machine with `gh auth login`.
+  new machine with `gh auth login`. **Not true on a keyring machine**: on `hookers-green` the
+  token is in gnome-keyring and this file is 80 bytes of `git_protocol` and a username, with no
+  secret in it at all ([#5](https://github.com/pvinis/setup/issues/5)). The "recreate with
+  `gh auth login`" advice still holds; the "it's secret" premise doesn't.
 - **neovim** — no `~/.config/nvim` existed on that machine.
 - **zoxide / fzf / direnv** — no standalone config; wired up via shell init, which lives in the fish
   config.

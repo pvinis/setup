@@ -5,9 +5,20 @@ conflict resolutions remembered, `main` for new repos, and one alias of my own. 
 desired-state idea as the package steps — state what I want, and let it be a no-op wherever
 the platform already provides it.
 
-**Identity is not this step.** Name, email, signing key and the credential helper belong to
-the chain of trust in [#5](https://github.com/pvinis/setup/issues/5). They land in the same
-file this step establishes, which is why the seam below is worth getting right first.
+**Identity is two rows of the table below**, and not a step of its own. Name and email are
+values I can state and check like any other, and neither is a secret; they land in the same
+file the seam below establishes, which is why getting that seam right comes first. The
+credential helper is *not* here — `gh auth login` writes it, so
+[`../00-human/gh-auth.md`](../00-human/gh-auth.md) owns repairing it.
+
+**Commits are not signed, and that's a decision.** The 2026-06 Mac signed with a hardcoded
+GPG key; this machine never has, and every commit in this repo is unsigned. The runbook
+records the negative rather than leaving the positive to be assumed again — no signing key,
+no `commit.gpgsign`, nothing to import, and nothing anywhere in the chain of trust waiting on
+gpg. (The GitHub account still carries 13 unrevoked GPG keys from years of per-machine keys.
+Pruning them is account hygiene, not something you do on a new machine, so it isn't here.)
+
+Both settled in [#5](https://github.com/pvinis/setup/issues/5).
 
 Needs git, from [`../20-packages/cli-tools.md`](../20-packages/cli-tools.md).
 
@@ -33,11 +44,13 @@ looked like a divergence to resolve. It isn't. They're two layers, and the perso
 
 ## What I want
 
-Written to `~/.gitconfig` on macOS; on Omarchy all but the first two arrive stock, so read
-them back rather than writing them again.
+Written to `~/.gitconfig` on macOS; on Omarchy all but the first three arrive stock, so read
+them back rather than writing them again. Identity is in the first three for the obvious
+reason — no platform ships it.
 
 | What I want | Setting |
 | --- | --- |
+| commits attributed to me | `user.name = Pavlos Vinieratos`, `user.email = pvinis@gmail.com` |
 | `main` for new repos | `init.defaultBranch = main` |
 | undo the last commit, keep the changes staged | `alias.boc = reset --soft HEAD~1` |
 | rebase on pull, never a merge bubble | `pull.rebase = true` |
@@ -61,15 +74,17 @@ Omarchy ships `/usr/share/omarchy/config/git/config` and **copies** it to
 `.bak.<epoch>` beside it). So personal values written there sit in the path of the next
 refresh, and stock improvements never reach a file you've edited.
 
-The whole Omarchy job is therefore: put the two personal settings in `~/.gitconfig`, and
-leave the copy **exactly as shipped**.
+The whole Omarchy job is therefore: put the personal settings in `~/.gitconfig`, and leave
+the copy **exactly as shipped**.
 
 ```sh
+git config --global user.name 'Pavlos Vinieratos'
+git config --global user.email 'pvinis@gmail.com'
 git config --global init.defaultBranch main
 git config --global alias.boc 'reset --soft HEAD~1'
 ```
 
-Both land in `~/.gitconfig` — but only once it exists, so create it first (an empty
+They all land in `~/.gitconfig` — but only once it exists, so create it first (an empty
 `touch ~/.gitconfig` is enough) or write the file directly. On a machine where `--global`
 has already been run without it, the values are in the copy and need moving out, not just
 setting.
@@ -105,9 +120,15 @@ inventing state; this section is here so the next one has a shape to arrive into
 ## Knowing it's done
 
 ```sh
+git config --get user.email                  # pvinis@gmail.com
 git config --get init.defaultBranch          # main
 git config --get-regexp '^alias\.'           # boc, plus whatever the platform ships
+git config --get commit.gpgsign              # nothing, and that's the intended state
 ```
+
+The `gpgsign` line is the one whose *empty* output is the pass. An unset value here means
+unsigned commits, which is what was decided; if it ever comes back set, something restored a
+config from the Mac era.
 
 On Omarchy there's a second check, and it's the one that proves the seam holds:
 

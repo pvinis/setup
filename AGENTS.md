@@ -12,8 +12,8 @@ Steps live in `steps/`; the format they follow is [`steps/README.md`](steps/READ
 
 - [`1password-signin.md`](steps/00-human/1password-signin.md) — the root of trust
 - [`app-store-signin.md`](steps/00-human/app-store-signin.md) — macOS; gates the App Store half of the apps step
+- [`gh-auth.md`](steps/00-human/gh-auth.md) — GitHub over HTTPS; no ssh key and no signing key, decided in [#5](https://github.com/pvinis/setup/issues/5)
 - *app logins* — Beeper, browser, Obsidian: [#21](https://github.com/pvinis/setup/issues/21)
-- *ssh key, gpg key, `gh auth login`* — [#5](https://github.com/pvinis/setup/issues/5)
 
 **`10-system/`**
 
