@@ -30,7 +30,13 @@ Steps live in `steps/`; the format they follow is [`steps/README.md`](steps/READ
 
 - [`cursor-size.md`](steps/30-desktop/cursor-size.md)
 - [`appearance.md`](steps/30-desktop/appearance.md)
-- *input, bar, dock, sound, displays, idle and lock, terminal font* — [#19](https://github.com/pvinis/setup/issues/19)
+- [`input.md`](steps/30-desktop/input.md) — tap to click, traditional scroll direction
+- [`displays.md`](steps/30-desktop/displays.md) — scaling; asks rather than asserts
+- [`terminal-font.md`](steps/30-desktop/terminal-font.md) — Iosevka, and the one knob that sizes all text
+- [`bar.md`](steps/30-desktop/bar.md) — position, clock format, battery percentage
+- [`idle-and-lock.md`](steps/30-desktop/idle-and-lock.md) — macOS values not captured yet
+- [`dock.md`](steps/30-desktop/dock.md) — macOS only
+- [`sound.md`](steps/30-desktop/sound.md) — macOS only
 
 **`40-shell/`**
 
